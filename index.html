@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하늘바다 — 글쓰는 사람</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f0ece4;
+    --paper: #0e0d0b;
+    --warm: #c8a96e;
+    --muted: #7a7063;
+    --faint: #1e1c18;
+    --accent: #d4b07a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 300;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14, 13, 11, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: flex-end;
+    gap: 36px;
+    padding: 18px 48px;
+    border-bottom: 1px solid #1e1c18;
+  }
+
+  nav a {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--warm);
+  }
+
+  .dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-trigger {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  .dropdown:hover .dropdown-trigger {
+    color: var(--warm);
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background: #141210;
+    border: 1px solid var(--faint);
+    min-width: 120px;
+    flex-direction: column;
+    padding-top: 0;
+  }
+
+  .dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu a {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 20px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .dropdown-menu a:hover {
+    color: var(--warm);
+    background: #1e1c18;
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      justify-content: center;
+      gap: 24px;
+      padding: 16px 24px;
+    }
+  }
+
+  /* 배경 질감 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 상단 가로선 장식 */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm), transparent);
+    opacity: 0.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    padding: 80px 48px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .header-label {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+
+  h1 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.25s;
+  }
+
+  h1 span {
+    color: var(--warm);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.4s;
+  }
+
+  /* ── 대표 인용문 ── */
+  .quote-section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.55s;
+  }
+
+  .quote-mark {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 120px;
+    line-height: 0.6;
+    color: var(--warm);
+    opacity: 0.25;
+    display: block;
+    margin-bottom: -20px;
+  }
+
+  blockquote {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(17px, 2.5vw, 22px);
+    font-weight: 400;
+    line-height: 2;
+    color: var(--ink);
+    border-left: 2px solid var(--warm);
+    padding-left: 32px;
+    margin: 24px 0;
+  }
+
+  blockquote em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* ── 소개 섹션 ── */
+  .about-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 48px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--warm);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-family: 'Nanum Myeongjo', serif;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 60px;
+  }
+
+  .about-text {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 2;
+    grid-column: 1 / -1;
+  }
+
+  .stat-item {
+    border-top: 1px solid var(--faint);
+    padding-top: 20px;
+  }
+
+  .stat-number {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  /* ── 카테고리 ── */
+  .categories-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--faint);
+    border: 1px solid var(--faint);
+    margin-top: 32px;
+  }
+
+  .cat-item {
+    background: var(--paper);
+    padding: 36px 28px;
+    transition: background 0.25s;
+    cursor: default;
+  }
+
+  .cat-item:hover {
+    background: #1a1815;
+  }
+
+  .cat-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .cat-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cat-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── 대표 글 ── */
+  .articles-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .articles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--faint);
+    border: 1px solid var(--faint);
+    margin-top: 32px;
+  }
+
+  .article-card {
+    background: var(--paper);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .article-card:hover {
+    background: #1a1815;
+  }
+
+  .article-card:hover .article-arrow {
+    color: var(--warm);
+    transform: translateX(4px);
+  }
+
+  .article-cat {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--warm);
+    font-family: 'Nanum Myeongjo', serif;
+    min-width: 52px;
+  }
+
+  .article-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 17px;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .article-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 48px 100px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn:hover {
+    background: var(--warm);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 32px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--faint);
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* 애니메이션 */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 모바일 */
+  @media (max-width: 600px) {
+    header, .quote-section, .about-section, .categories-section, .cta-section {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .cat-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      padding: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://blog.naver.com/barosa22" target="_blank">블로그</a>
+  <a href="https://brunch.co.kr/@lifeinreading" target="_blank">브런치</a>
+  <div class="dropdown">
+    <span class="dropdown-trigger">인스타그램 ▾</span>
+    <div class="dropdown-menu">
+      <a href="https://www.instagram.com/lifeinreading" target="_blank">책스타그램</a>
+      <a href="https://instagram.com/writeinlife" target="_blank">글스타그램</a>
+    </div>
+  </div>
+  <a href="https://nogomark.github.io/media-and-public-sphere/" target="_blank">전자책</a>
+</nav>
+
+<div class="rule"></div>
+
+<!-- HEADER -->
+<header>
+  <p class="header-label">Portfolio · 2026</p>
+  <h1>하늘<span>바다</span></h1>
+  <p class="subtitle">출간 작가를 꿈꾸는 역사학도 출신 직장인</p>
+</header>
+
+<div class="rule"></div>
+
+<!-- 대표 인용문 -->
+<section class="quote-section">
+  <span class="quote-mark">"</span>
+  <blockquote>
+    인생이 선사하는 선물은 그보다 훨씬 더 많은 순간에 찾아온다.<br>
+    우리가 좋아하는 걸 하는 순간이든, 그 반대의 일을 하는 순간이든,<br>
+    그냥 무의미하게 흘려보내는 순간이든 상관없이.<br><br>
+    좀 더 폭넓은 시각으로 삶을 두루 살피며 살아야지.<br>
+    <em>한때는 죽도록 가기 싫었던 길에서 전혀 뜻하지 않았던 네잎클로버를 만날지도 모르니까.</em>
+  </blockquote>
+</section>
+
+<div class="rule"></div>
+
+<!-- 소개 -->
+<section class="about-section">
+  <p class="section-label">About</p>
+  <div class="about-grid">
+    <p class="about-text">
+      역사를 공부하며 세상을 이해하는 법을 배웠고,<br>
+      글을 쓰며 그 이해를 나누는 법을 익혔습니다.<br>
+      독후감, 시, 에세이 — 읽고 느끼고 쓰는 일을 계속하고 있습니다.
+    </p>
+    <div class="stat-item">
+      <div class="stat-number">97</div>
+      <div class="stat-label">브런치 발행 글</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">6</div>
+      <div class="stat-label">브런치 작품</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">73</div>
+      <div class="stat-label">팔로워</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">꾸준히</div>
+      <div class="stat-label">쌓아가는 중</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 카테고리 -->
+<section class="categories-section">
+  <p class="section-label">글의 결</p>
+  <div class="cat-grid">
+    <div class="cat-item">
+      <span class="cat-icon">📖</span>
+      <div class="cat-name">독후감</div>
+      <p class="cat-desc">책을 읽고 남긴 생각들.<br>관심 분야의 책과 나누는 조용한 대화.</p>
+    </div>
+    <div class="cat-item">
+      <span class="cat-icon">🌿</span>
+      <div class="cat-name">에세이</div>
+      <p class="cat-desc">일상의 순간에서 건져 올린 문장들.<br>삶을 두루 살피는 시선으로.</p>
+    </div>
+    <div class="cat-item">
+      <span class="cat-icon">✦</span>
+      <div class="cat-name">시</div>
+      <p class="cat-desc">감성이 언어가 되는 자리.<br>짧지만 오래 남는 것들.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 대표 글 -->
+<section class="articles-section">
+  <p class="section-label">대표 글</p>
+  <div class="articles-grid">
+    <a class="article-card" href="https://brunch.co.kr/@lifeinreading/129" target="_blank">
+      <span class="article-cat">독후감</span>
+      <span class="article-title">우리가 '작은 김장하'가 된다면</span>
+      <span class="article-arrow">→</span>
+    </a>
+    <a class="article-card" href="https://brunch.co.kr/@lifeinreading/24" target="_blank">
+      <span class="article-cat">에세이</span>
+      <span class="article-title">비밀의 목적지</span>
+      <span class="article-arrow">→</span>
+    </a>
+    <a class="article-card" href="https://brunch.co.kr/@lifeinreading/50" target="_blank">
+      <span class="article-cat">시</span>
+      <span class="article-title">그리움이 쌓이면</span>
+      <span class="article-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>글을 읽으러 오세요</h2>
+  <p>브런치에서 더 많은 글을 만나실 수 있습니다.</p>
+  <a class="btn" href="https://brunch.co.kr/@lifeinreading" target="_blank">
+    브런치 바로가기 →
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 하늘바다</p>
+  <p>에세이스트 · 역사학도 출신 · 출간 작가를 꿈꾸며</p>
+</footer>
+
+</body>
+</html>

@@ -38,10 +38,30 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     display: flex;
-    justify-content: flex-end;
-    gap: 36px;
+    justify-content: space-between;
+    align-items: center;
     padding: 18px 48px;
     border-bottom: 1px solid #1e1c18;
+  }
+
+  .nav-logo {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #f0ece4;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-logo:hover {
+    color: var(--warm);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
   }
 
   nav a {
@@ -120,13 +140,23 @@
 
   @media (max-width: 600px) {
     nav {
-      justify-content: center;
-      gap: 24px;
+      flex-direction: column;
+      gap: 12px;
       padding: 16px 24px;
+    }
+
+    .nav-links {
+      gap: 20px;
     }
   }
 
-  /* 배경 질감 */
+  .logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  /* ── 배경 질감 ── */
   body::before {
     content: '';
     position: fixed;
@@ -495,19 +525,22 @@
   }
 </style>
 </head>
-<body>
+<body id="top">
 
 <nav>
-  <a href="https://blog.naver.com/barosa22" target="_blank">블로그</a>
-  <a href="https://brunch.co.kr/@lifeinreading" target="_blank">브런치</a>
-  <div class="dropdown">
-    <span class="dropdown-trigger">인스타그램 ▾</span>
-    <div class="dropdown-menu">
-      <a href="https://www.instagram.com/lifeinreading" target="_blank">책스타그램</a>
-      <a href="https://instagram.com/writeinlife" target="_blank">글스타그램</a>
+  <a href="#top" class="nav-logo">하늘바다</a>
+  <div class="nav-links">
+    <a href="https://blog.naver.com/barosa22" target="_blank">블로그</a>
+    <a href="https://brunch.co.kr/@lifeinreading" target="_blank">브런치</a>
+    <div class="dropdown">
+      <span class="dropdown-trigger">인스타그램 ▾</span>
+      <div class="dropdown-menu">
+        <a href="https://www.instagram.com/lifeinreading" target="_blank">책스타그램</a>
+        <a href="https://instagram.com/writeinlife" target="_blank">글스타그램</a>
+      </div>
     </div>
+    <a href="https://nogomark.github.io/media-and-public-sphere/" target="_blank">전자책</a>
   </div>
-  <a href="https://nogomark.github.io/media-and-public-sphere/" target="_blank">전자책</a>
 </nav>
 
 <div class="rule"></div>
@@ -529,7 +562,7 @@
     우리가 좋아하는 걸 하는 순간이든, 그 반대의 일을 하는 순간이든,<br>
     그냥 무의미하게 흘려보내는 순간이든 상관없이.<br><br>
     좀 더 폭넓은 시각으로 삶을 두루 살피며 살아야지.<br>
-    <em>한때는 죽도록 가기 싫었던 길에서 전혀 뜻하지 않았던 네 잎 클로버를 만날지도 모르니까.</em>
+    <em>한때는 죽도록 가기 싫었던 길에서 전혀 뜻하지 않았던 네잎클로버를 만날지도 모르니까.</em>
   </blockquote>
   <p class="quote-source">— 브런치에 올린 글 <a class="quote-link" href="https://brunch.co.kr/@lifeinreading/122" target="_blank">〈네 잎 클로버〉</a> 중에서</p>
 </section>

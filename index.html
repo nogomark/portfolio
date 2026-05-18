@@ -475,6 +475,31 @@
     transform: translateY(-2px);
   }
 
+  /* ── 방명록 ── */
+  .guestbook-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .guestbook-embed {
+    margin-top: 32px;
+  }
+
+  .guestbook-embed iframe {
+    border: 1px solid var(--faint);
+    background: white;
+  }
+
+  @media (max-width: 600px) {
+    .guestbook-section {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
   /* ── FOOTER ── */
   footer {
     position: relative;
@@ -540,6 +565,7 @@
       </div>
     </div>
     <a href="https://nogomark.github.io/media-and-public-sphere/" target="_blank">전자책</a>
+    <a href="https://tally.so/r/zxG1VZ" target="_blank">Contact</a>
   </div>
 </nav>
 

@@ -685,38 +685,5 @@
   <p>에세이스트 · 역사학도 출신 · 출간 작가를 꿈꾸며</p>
 </footer>
 
-<!-- 팝업 -->
-<div id="popup-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-  <div style="background:#0e0d0b; border:1px solid #1e1c18; max-width:420px; width:90%; padding:48px 40px; position:relative; font-family:'Nanum Myeongjo',serif;">
-    <p style="font-size:11px; letter-spacing:0.35em; color:#7a7063; margin:0 0 24px;">WELCOME</p>
-    <h2 style="font-size:28px; font-weight:800; color:#f0ece4; margin:0 0 16px; line-height:1.3;">글을 읽으러 오세요</h2>
-    <p style="font-size:15px; color:#7a7063; line-height:1.9; margin:0 0 36px;">브런치에서 더 많은 글을 만나실 수 있습니다.</p>
-    <div style="display:flex; align-items:center; justify-content:space-between;">
-      <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#7a7063; cursor:pointer;">
-        <input type="checkbox" id="hide-today" style="accent-color:#c8a96e;"> 오늘은 그만 보기
-      </label>
-      <button onclick="closePopup()" style="background:#f0ece4; color:#0e0d0b; border:none; padding:10px 24px; font-family:'Nanum Myeongjo',serif; font-size:13px; cursor:pointer; letter-spacing:0.1em;">닫기</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  function closePopup() {
-    if (document.getElementById('hide-today').checked) {
-      var expires = new Date();
-      expires.setHours(23, 59, 59, 0);
-      localStorage.setItem('hidePopup', expires.getTime());
-    }
-    document.getElementById('popup-overlay').style.display = 'none';
-  }
-
-  window.onload = function() {
-    var hideUntil = localStorage.getItem('hidePopup');
-    if (!hideUntil || new Date().getTime() > parseInt(hideUntil)) {
-      document.getElementById('popup-overlay').style.display = 'flex';
-    }
-  };
-</script>
-
 </body>
 </html>

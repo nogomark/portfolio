@@ -375,6 +375,78 @@
     line-height: 1.8;
   }
 
+  /* ── 대담 발췌 ── */
+  .excerpt-section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .excerpt-card {
+    border: 1px solid #2a2820;
+    border-radius: 4px;
+    padding: 36px 40px;
+    background: #131210;
+  }
+
+  .excerpt-topic {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+    margin-bottom: 28px;
+  }
+
+  .excerpt-dialogue {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .excerpt-turn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .excerpt-speaker {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .excerpt-user .excerpt-speaker { color: #6a8fa8; }
+  .excerpt-claude .excerpt-speaker { color: var(--warm); }
+
+  .excerpt-turn p {
+    font-size: 14px;
+    line-height: 1.95;
+    color: #c8c4bc;
+    margin: 0;
+  }
+
+  .excerpt-highlight {
+    font-style: italic;
+    color: var(--ink) !important;
+    border-left: 2px solid var(--warm);
+    padding-left: 16px;
+    margin-top: 8px !important;
+  }
+
+  .excerpt-link {
+    display: inline-block;
+    margin-top: 32px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--warm);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .excerpt-link:hover { border-bottom-color: var(--warm); }
+
   /* ── 대표 글 ── */
   .articles-section {
     position: relative;
@@ -678,6 +750,28 @@
       <span class="article-title">그리움이 쌓이면</span>
       <span class="article-arrow">→</span>
     </a>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 대담 발췌 -->
+<section class="excerpt-section">
+  <p class="section-label">대담 발췌</p>
+  <div class="excerpt-card">
+    <div class="excerpt-topic">미디어와 공론장 · 만민공동회에서 촛불까지</div>
+    <div class="excerpt-dialogue">
+      <div class="excerpt-turn excerpt-user">
+        <span class="excerpt-speaker">바다</span>
+        <p>독립협회의 만민공동회가 2008년 촛불집회 이후 각종 집회에서 시민 발언으로 계보를 이어가고 있는 것 같아. 이 이야기도 덧붙이고 싶어.</p>
+      </div>
+      <div class="excerpt-turn excerpt-claude">
+        <span class="excerpt-speaker">클로드</span>
+        <p>만민공동회(1898)는 조선 역사상 최초로 신분과 관계없이 누구나 광장에 나와 발언할 수 있었던 자리예요. 서원·향교가 제도 안의 공론이었다면 만민공동회는 제도 밖, 거리의 공론이었어요. 그게 100년을 건너 2008년 촛불집회에서 다시 나타나죠.</p>
+        <p class="excerpt-highlight">디지털 공론이 아무리 발달해도 결정적인 순간에 사람들이 다시 광장으로 나오는 이유가 거기 있는 것 같아요. 몸이 거기 있다는 것 자체가 발언이 되는 거죠.</p>
+      </div>
+    </div>
+    <a class="excerpt-link" href="https://nogomark.github.io/media-and-public-sphere/" target="_blank">대담 전문 읽기 →</a>
   </div>
 </section>
 
